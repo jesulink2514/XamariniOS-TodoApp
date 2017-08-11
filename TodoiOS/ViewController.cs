@@ -1,11 +1,14 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using Foundation;
 using UIKit;
 
 namespace TodoiOS
 {
     public partial class ViewController : UIViewController
     {
+        public string TodoItem = "";
+        public List<string> Todos { get; set; } = new List<string>();
         public ViewController(IntPtr handle) : base(handle)
         {
         }
@@ -13,7 +16,22 @@ namespace TodoiOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            // Perform any additional setup after loading the view, typically from a nib.
+
+            GuardarButton.TouchUpInside += (s, e) =>
+            {
+                Todos.Add(TodoEntry.Text);
+                TodoEntry.ResignFirstResponder();
+            };
+        }
+
+        public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+        {
+            base.PrepareForSegue(segue, sender);
+
+            var revisarcontroller = segue.DestinationViewController as RevisarTodosViewController;
+            if (revisarcontroller == null) return;
+
+            revisarcontroller.Todos = Todos;
         }
 
         public override void DidReceiveMemoryWarning()
