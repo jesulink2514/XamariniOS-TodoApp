@@ -15,7 +15,15 @@ namespace TodoiOS
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton CancelarButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton GuardarButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField PrioridadEntry { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -27,9 +35,19 @@ namespace TodoiOS
 
         void ReleaseDesignerOutlets ()
         {
+            if (CancelarButton != null) {
+                CancelarButton.Dispose ();
+                CancelarButton = null;
+            }
+
             if (GuardarButton != null) {
                 GuardarButton.Dispose ();
                 GuardarButton = null;
+            }
+
+            if (PrioridadEntry != null) {
+                PrioridadEntry.Dispose ();
+                PrioridadEntry = null;
             }
 
             if (RevisarButton != null) {

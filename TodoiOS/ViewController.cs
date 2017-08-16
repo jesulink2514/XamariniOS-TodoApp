@@ -8,7 +8,7 @@ namespace TodoiOS
     public partial class ViewController : UIViewController
     {
         public string TodoItem = "";
-        public List<string> Todos { get; set; } = new List<string>();
+        public List<TodoItem> Todos { get; set; } = new List<TodoItem>();
         public ViewController(IntPtr handle) : base(handle)
         {
         }
@@ -19,9 +19,22 @@ namespace TodoiOS
 
             GuardarButton.TouchUpInside += (s, e) =>
             {
-                Todos.Add(TodoEntry.Text);
+                var todo = new TodoItem()
+                {
+                    Tarea = TodoEntry.Text,
+                    Prioridad = PrioridadEntry.Text,
+                    FechaFin = DateTime.Now,
+                    Completado = false
+                };
+                Todos.Add(todo);
                 TodoEntry.Text = string.Empty;
                 TodoEntry.ResignFirstResponder();
+            };
+
+            CancelarButton.TouchUpInside += (s, e) =>
+            {
+                TodoEntry.Text = string.Empty;
+                PrioridadEntry.Text = string.Empty;
             };
         }
 
