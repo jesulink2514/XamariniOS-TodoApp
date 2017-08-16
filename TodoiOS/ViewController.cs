@@ -20,6 +20,7 @@ namespace TodoiOS
             GuardarButton.TouchUpInside += (s, e) =>
             {
                 Todos.Add(TodoEntry.Text);
+                TodoEntry.Text = string.Empty;
                 TodoEntry.ResignFirstResponder();
             };
         }
