@@ -19,6 +19,10 @@ namespace TodoiOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField FechaFinEntry { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton GuardarButton { get; set; }
 
         [Outlet]
@@ -38,6 +42,11 @@ namespace TodoiOS
             if (CancelarButton != null) {
                 CancelarButton.Dispose ();
                 CancelarButton = null;
+            }
+
+            if (FechaFinEntry != null) {
+                FechaFinEntry.Dispose ();
+                FechaFinEntry = null;
             }
 
             if (GuardarButton != null) {
