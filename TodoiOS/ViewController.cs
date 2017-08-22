@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using Foundation;
 using UIKit;
 using DT.iOS.DatePickerDialog;
+using SQLite;
 
 namespace TodoiOS
 {
     public partial class ViewController : UIViewController
     {
         private DateTime _fechafin;
-        public string TodoItem = "";
-        public List<TodoItem> Todos { get; set; } = new List<TodoItem>();
+        private readonly SQLiteConnection _db;
         public ViewController(IntPtr handle) : base(handle)
         {
+            _db = Database.GetConnection();
         }
 
         public override void ViewDidLoad()
@@ -28,8 +29,13 @@ namespace TodoiOS
                     FechaFin = _fechafin,
                     Completado = false
                 };
-                Todos.Add(todo);
+
+                _db.Insert(todo);
+
                 TodoEntry.Text = string.Empty;
+                PrioridadEntry.Text = string.Empty;
+                FechaFinEntry.Text = string.Empty;
+
                 PrioridadEntry.ResignFirstResponder();
                 TodoEntry.ResignFirstResponder();
             };
@@ -54,16 +60,6 @@ namespace TodoiOS
                 FechaFinEntry.Text = dt.ToShortDateString();
             },fechaPorDefecto);
             return false;
-        }
-
-        public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
-        {
-            base.PrepareForSegue(segue, sender);
-
-            var revisarcontroller = segue.DestinationViewController as RevisarTodosViewController;
-            if (revisarcontroller == null) return;
-
-            //revisarcontroller.Todos = Todos;
         }
 
         public override void DidReceiveMemoryWarning()
