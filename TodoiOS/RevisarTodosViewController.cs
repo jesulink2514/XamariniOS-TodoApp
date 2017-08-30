@@ -7,7 +7,7 @@ namespace TodoiOS
 {
     public partial class RevisarTodosViewController : UITableViewController
     {
-        public List<string> Todos { get; set; }
+        public List<TodoItem> Todos { get; set; }
 
         public const string TodoCellId = "TodoCell";
 
@@ -17,8 +17,21 @@ namespace TodoiOS
 
             TableView.Source = new TodoDataSource(this);
 
-            Todos = new List<string>();
+            Todos = new List<TodoItem>();
         }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+            foreach (var item in Database.GetConnection().Table<TodoItem>())
+            {
+                Todos.Add(item);
+            }
+
+            TableView.ReloadData();
+        }
+
     }
 
     public class TodoDataSource: UITableViewSource
@@ -42,7 +55,7 @@ namespace TodoiOS
 
             var todo = controller.Todos[rowIndex];
 
-            cell.TextLabel.Text = todo;
+            cell.TextLabel.Text = $"{todo.Tarea} - {todo.Prioridad} - {todo.FechaFin}";
 
             return cell;
         }
